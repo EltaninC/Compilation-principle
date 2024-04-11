@@ -1,7 +1,7 @@
 package org.example;
 
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -30,7 +30,6 @@ public class Main {
             System.out.println("错误输入");
         }
     }
-
 
 
 }

@@ -1,11 +1,13 @@
 package org.example;
 
+import lombok.val;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ThompsonAlgorithmTest {
@@ -117,5 +119,19 @@ class ThompsonAlgorithmTest {
         );
         NFA nfa = new NFA(l, length, start, end, edge);
         assertEquals(nfa, ThompsonAlgorithm.regexToNFA(regex));
+    }
+
+    @Test
+    void DFATest() throws InterruptedException {
+        StringBuilder regex = new StringBuilder("a*0|10");
+        SubsetConstruction subsetConstruction = new SubsetConstruction();
+        ThompsonAlgorithm thompsonAlgorithm = new ThompsonAlgorithm();
+        SubsetPartition subsetPartition = new SubsetPartition();
+        NFA nfa = thompsonAlgorithm.regexToNFA(regex);
+        System.out.println(nfa);
+        DFA dfa =subsetConstruction.constructDFAFromNFA(nfa);
+        System.out.println(dfa);
+        DFA dfa1 = subsetPartition.makeMinDFA(dfa);
+        System.out.println(dfa1);
     }
 }
