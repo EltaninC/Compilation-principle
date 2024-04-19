@@ -123,15 +123,19 @@ class ThompsonAlgorithmTest {
 
     @Test
     void DFATest() throws InterruptedException {
-        StringBuilder regex = new StringBuilder("a*0|10");
+
+        StringBuilder regex = new StringBuilder("((a|b)*|aa)*");
         SubsetConstruction subsetConstruction = new SubsetConstruction();
         ThompsonAlgorithm thompsonAlgorithm = new ThompsonAlgorithm();
         SubsetPartition subsetPartition = new SubsetPartition();
         NFA nfa = thompsonAlgorithm.regexToNFA(regex);
         System.out.println(nfa);
+        GraphStream graphStream = new GraphStream();
+        graphStream.display(nfa);
         DFA dfa =subsetConstruction.constructDFAFromNFA(nfa);
         System.out.println(dfa);
         DFA dfa1 = subsetPartition.makeMinDFA(dfa);
         System.out.println(dfa1);
+        sleep(10000);
     }
 }

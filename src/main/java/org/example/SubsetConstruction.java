@@ -11,7 +11,9 @@ public class SubsetConstruction {
         //设置初始状态集
         List<Set<Integer>> dfaStates = new ArrayList<>();
         Set<Integer> startState = new HashSet<>();
-        startState.addAll(getClosures(nfa.start));
+        Set<Integer> closures = new HashSet<>();
+        getClosures(nfa.start,closures);
+        startState.addAll(closures);
         dfaStates.add(startState);
         List<Edge> edge = new ArrayList<>();
 
@@ -43,21 +45,17 @@ public class SubsetConstruction {
     }
 
     //求闭包
-    Set<Integer> getClosures(Integer a){
-        Set<Integer> res = new HashSet<Integer>();
+    void getClosures(Integer a,Set<Integer> res){
         res.add(a);
-
         //获取边
         Map<Integer, List<Integer>> listMap = edges.get('ε');
         List<Integer> list = listMap.get(a);
 
-        if(list==null) return res;
+        if(list==null) return;
 
         for (Integer integer : list) {
-            res.add(integer);
-            res.addAll(getClosures(integer));
+            if(!res.contains(integer)) getClosures(integer,res);
         }
-        return res;
     }
 
     //跳转
@@ -70,7 +68,9 @@ public class SubsetConstruction {
             List<Integer> list = listMap.get(i);
             if(list==null) continue;
             for (Integer integer : list) {
-                res.addAll(getClosures(integer));
+                Set<Integer> closures = new HashSet<>();
+                getClosures(integer,closures);
+                res.addAll(closures);
             }
 
         }
